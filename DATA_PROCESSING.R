@@ -69,6 +69,11 @@ if(nrow(correction_log_discrep) !=0){
 # # file.edit("R/remove_rejected_data.R")
 source("R/remove_rejected_data.R")
 
+## Filter by Date ----------------------------------------------------------------------------------
+cutoff_date <- "2024-06-11"
+household_dt <- household_dt %>% 
+  filter(SubmissionDate>=cutoff_date)
+
 # Relevancy check ----------------------------------------------------------------------------------
 # file.edit("R/check_relevancy_rules.R")
 source("R/check_relevancy_rules.R") # Figure out the one separator issue HH
@@ -139,7 +144,6 @@ source("R/dataset_responses_check.R")
 # generate data with missing translations ----------------------------------------------------------
 # file.edit("R/check_missing_translation.R")
 source("R/check_missing_translation.R") # Add export # Temorary filter for QA at the end
-
 
 # Export -------------------------------------------------------------------------------------------
 ## QA Backlog
