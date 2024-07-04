@@ -33,6 +33,7 @@ household_dt <- household_dt %>%
 url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vTF_xbTVE6fH9sBSB4s-s70-4cYm_3aho6DXf3_9ZAVs9u5aLPcq1EK_NacvnevL4EO47WwRl1YzXNM/pub?"
 qa_log <- readr::read_csv(paste0(url, "gid=473078450&single=true&output=csv"), col_types = "c")
 correction_log <- readr::read_csv(paste0(url, "gid=758688462&single=true&output=csv"), col_types = "c")
+translation_log <- readr::read_csv(paste0(url, "gid=187815952&single=true&output=csv"), col_types = "c")
 
 # Join QA Status -----------------------------------------------------------------------------------
 count(qa_log, Tool, `Final QA Status`)
@@ -82,14 +83,14 @@ source("R/check_relevancy_rules.R") # Figure out the one separator issue HH
 # file.edit("R/attach_labels.R")
 source("R/attach_labels.R")
 
-# # apply Translation log ----------------------------------------------------------------------------
-# translation_log %>% count(Tool, `Tab Name`)
-# # file.edit("R/apply_translation_log.R")
-# source("R/apply_translation_log.R")
-# if(nrow(translation_log_discrep) !=0){
-#   print("Correction Logs not applied -------------------")
-#   correction_log_discrep
-# }
+# apply Translation log ----------------------------------------------------------------------------
+translation_log %>% count(Tool, Tab)
+# file.edit("R/apply_translation_log.R")
+source("R/apply_translation_log.R")
+if(nrow(translation_log_discrep) !=0){
+  print("Correction Logs not applied -------------------")
+  correction_log_discrep
+}
 
 ## Recode ------------------------------------------------------------------------------------------
 # file.edit("R/recode.R")
@@ -139,7 +140,7 @@ source("R/dataset_responses_check.R")
 
 ## Remove Extra columns ----------------------------------------------------------------------------
 # file.edit("R/remove_extra_columns.R")
-# source("R/remove_extra_columns.R")
+source("R/remove_extra_columns.R")
 
 # generate data with missing translations ----------------------------------------------------------
 # file.edit("R/check_missing_translation.R")
@@ -154,23 +155,23 @@ qa_backlog_list <- list(
 
 ## export cleaned datasets
 check_path("output/cleaned_data") # create the output path
-writexl::write_xlsx(list(data=household_dt), paste0("output/cleaned_data/UNICEF_WASH_Household_Survey_", lubridate::today(), ".xlsx"))
-writexl::write_xlsx(list(data=hf_checklist), paste0("output/cleaned_data/UNICEF_WASH_Observation_Checklist_HF_", lubridate::today(), ".xlsx"))
-writexl::write_xlsx(list(data=school_checklist), paste0("output/cleaned_data/UNICEF_WASH_Observation_Checklist_School_", lubridate::today(), ".xlsx"))
-writexl::write_xlsx(list(data=wss_observation), paste0("output/cleaned_data/UNICEF_WASH_WSS_Observation_", lubridate::today(), ".xlsx"))
+writexl::write_xlsx(list(data=household_dt), paste0("output/cleaned_data/UNICEF_WASH_Household_Survey_cleaned_", lubridate::today(), ".xlsx"))
+writexl::write_xlsx(list(data=hf_checklist), paste0("output/cleaned_data/UNICEF_WASH_Observation_Checklist_HF_cleaned_", lubridate::today(), ".xlsx"))
+writexl::write_xlsx(list(data=school_checklist), paste0("output/cleaned_data/UNICEF_WASH_Observation_Checklist_School_cleaned_", lubridate::today(), ".xlsx"))
+writexl::write_xlsx(list(data=wss_observation), paste0("output/cleaned_data/UNICEF_WASH_WSS_Observation_cleaned_", lubridate::today(), ".xlsx"))
 
 ## export client datasets
 check_path("output/client_data") # create the output path
-export_datasets(list(data=household_dt_approved), paste0("output/cleaned_data/UNICEF_WASH_Household_Survey_Pilot_", lubridate::today(), ".xlsx"))
-export_datasets(list(data=hf_checklist_approved), paste0("output/cleaned_data/UNICEF_WASH_Observation_Checklist_HF_", lubridate::today(), ".xlsx"))
-export_datasets(list(data=school_checklist_approved), paste0("output/cleaned_data/UNICEF_WASH_Observation_Checklist_School_", lubridate::today(), ".xlsx"))
-export_datasets(list(data=wss_observation_approved), paste0("output/cleaned_data/UNICEF_WASH_WSS_Observation_", lubridate::today(), ".xlsx"))
+export_datasets(list(data=household_dt_approved), paste0("output/client_data/UNICEF_WASH_Household_Survey_cleaned_approved_", lubridate::today(), ".xlsx"))
+export_datasets(list(data=hf_checklist_approved), paste0("output/client_data/UNICEF_WASH_Observation_Checklist_HF_cleaned_approved_", lubridate::today(), ".xlsx"))
+export_datasets(list(data=school_checklist_approved), paste0("output/client_data/UNICEF_WASH_Observation_Checklist_School_cleaned_approved_", lubridate::today(), ".xlsx"))
+export_datasets(list(data=wss_observation_approved), paste0("output/client_data/UNICEF_WASH_WSS_Observation_cleaned_approved_", lubridate::today(), ".xlsx"))
 
 
 ## export additional files
 writexl::write_xlsx(correction_log, "output/correction_log.xlsx", format_headers = F) # correction
 writexl::write_xlsx(correction_log_issues, "output/correction_log_issues.xlsx", format_headers = F) # correction log issues
-# writexl::write_xlsx(translation_log_issues, "output/translation_log_issues.xlsx", format_headers = F) # correction log issues
+writexl::write_xlsx(translation_log_issues, "output/translation_log_issues.xlsx", format_headers = F) # correction log issues
 writexl::write_xlsx(correction_log_discrep, "output/correction_log_discrep.xlsx", format_headers = F)
 writexl::write_xlsx(missing_translation_log, "output/untranslated_log.xlsx", format_headers = F)
 writexl::write_xlsx(relevancy_issues, "output/relevancy_issues.xlsx", format_headers = F)

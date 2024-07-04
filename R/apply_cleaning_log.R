@@ -1,6 +1,7 @@
 # clean the cleaning log -----------------------------------------------------------------
 options(scipen = 999)
 tabs <- c("data")
+tool_names <- c("Household Survey", "Observation Checklist HF", "Observation Checklist School", "Observation Water Supply System")
 sm_variables <- read_excel("input/select_multiple_questions.xlsx") %>% pull(questions)
 ## Filter empty rows
 correction_log_filtered <- correction_log %>%
@@ -20,7 +21,7 @@ correction_log_filtered <- correction_log %>%
 # Identify issues
 correction_log_filtered <- correction_log_filtered %>% 
   mutate(issue = case_when(
-    is.na(Tools) ~ "Tool name is missing",
+    is.na(Tools) & Tools %notin% tool_names ~ "Tool name",
     is.na(Tab_Name) | Tab_Name %notin% tabs ~ "Tab name",
     Tools == "Household Survey" & question %notin% names(household_dt) ~ "question",
     Tools == "Household Survey" & KEY %notin% household_dt$KEY ~ "KEY",
