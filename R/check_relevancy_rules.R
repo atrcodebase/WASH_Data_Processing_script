@@ -77,7 +77,7 @@ relevancy_issues <- plyr::rbind.fill(
   school_relevancy_issues %>% mutate(Tool="School Checklist"),
   wss_relevancy_issues %>% mutate(Tool="WSS")
 ) %>% 
-  arrange(Tool, KEY)
+  arrange(Tool)
 
 ## Select Multiple issues
 SM_issues <- list(
