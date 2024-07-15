@@ -6,7 +6,7 @@ hh_image_cols <- household_tool %>% filter(type %in% c("image") & name %in% name
 
 hh_missing_log <- rbind(
   # Translation
-  log_questions(data=household_dt, columns=hh_audio_cols, suffix="Translation", sheet="data")
+  log_questions(data=household_dt_approved, columns=hh_audio_cols, suffix="Translation", sheet="data")
   # Image QA
   # log_questions(data=household_dt, columns=hh_image_cols, suffix="QA", sheet="data") # No QA required for non ARTF projects
 )
@@ -18,9 +18,9 @@ hf_image_cols <- hf_tool %>% filter(type %in% c("image") & name %in% names(hf_ch
 
 hf_missing_log <- rbind(
   # Translation
-  log_questions(data=hf_checklist, columns=hf_audio_cols, suffix="Translation", sheet="data"),
+  log_questions(data=hf_checklist_approved, columns=hf_audio_cols, suffix="Translation", sheet="data"),
   # Image QA
-  log_questions(data=hf_checklist, columns=hf_image_cols, suffix="QA", sheet="data") # No QA required for non ARTF projects
+  log_questions(data=hf_checklist_approved, columns=hf_image_cols, suffix="QA", sheet="data") # No QA required for non ARTF projects
 )
 
 ## Observation Checklist - School
@@ -30,9 +30,9 @@ school_image_cols <- school_tool %>% filter(type %in% c("image") & name %in% nam
 
 school_missing_log <- rbind(
   # Translation
-  log_questions(data=school_checklist, columns=school_audio_cols, suffix="Translation", sheet="data"),
+  log_questions(data=school_checklist_approved, columns=school_audio_cols, suffix="Translation", sheet="data"),
   # Image QA
-  log_questions(data=school_checklist, columns=school_image_cols, suffix="QA", sheet="data") # No QA required for non ARTF projects
+  log_questions(data=school_checklist_approved, columns=school_image_cols, suffix="QA", sheet="data") # No QA required for non ARTF projects
 )
 
 ## Water Supply System Observation
@@ -42,9 +42,9 @@ wss_image_cols <- wss_tool %>% filter(type %in% c("image") & name %in% names(wss
 
 wss_missing_log <- rbind(
   # Translation
-  log_questions(data=wss_observation, columns=wss_audio_cols, suffix="Translation", sheet="data"),
+  log_questions(data=wss_observation_approved, columns=wss_audio_cols, suffix="Translation", sheet="data"),
   # Image QA
-  log_questions(data=wss_observation, columns=wss_image_cols, suffix="QA", sheet="data") # No QA required for non ARTF projects
+  log_questions(data=wss_observation_approved, columns=wss_image_cols, suffix="QA", sheet="data") # No QA required for non ARTF projects
 )
 
 ## Log Missing Translation -------------------------------------------------------------------------
@@ -70,7 +70,7 @@ missing_translation_QA_log <- rbind(
 
 ## Separate translation and image logs
 missing_translation_QA_log_sub <- missing_translation_QA_log %>% 
-  mutate(key=str_split_fixed(KEY, "/", 2)[,1])
+  filter(question_type == "Translation" & question %notin% c("Surveyor_Comments_Translation", "End_Comments_Translation"))
 
 # Export list
 missing_translation_QA_log <- list(
