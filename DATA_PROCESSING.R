@@ -132,7 +132,7 @@ source("R/filter_approved_data.R")
 
 ## Logic check -------------------------------------------------------------------------------------
 # file.edit("R/logic_check.R")
-# source("R/logic_check.R")
+source("R/logic_check.R")
 
 ## Compare dataset responses with the Tools --------------------------------------------------------
 # file.edit("R/dataset_responses_check.R")
@@ -145,6 +145,10 @@ source("R/remove_extra_columns.R")
 # generate data with missing translations ----------------------------------------------------------
 # file.edit("R/check_missing_translation.R")
 source("R/check_missing_translation.R") # Add export # Temorary filter for QA at the end
+
+# Client Dataset ----------------------------------------------------------------------------------
+# file.edit("R/modify_client_data.R")
+source("R/modify_client_data.R")
 
 # Export -------------------------------------------------------------------------------------------
 ## QA Backlog
@@ -179,5 +183,5 @@ writexl::write_xlsx(SM_issues, "output/Select_multiple_issues.xlsx", format_head
 writexl::write_xlsx(missing_translation_QA_log, "output/Missing_audio_translation_&_image_QA.xlsx", format_headers = F)
 writexl::write_xlsx(qa_backlog_list, "output/QA_backlog.xlsx", format_headers = F)
 writexl::write_xlsx(response_log_list, "output/dataset_response_mismatch_with_tool.xlsx", format_headers = F)
-# writexl::write_xlsx(logical_issues_list, "output/Logical_issues.xlsx", format_headers = F) # Add later
+writexl::write_xlsx(logical_issues_list, "output/Logical_issues.xlsx", format_headers = F) # Add later
 

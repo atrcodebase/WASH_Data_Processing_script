@@ -460,7 +460,8 @@ log_questions <- function(data, columns, columns_different="", key_col="KEY", su
   # QA Image status to exclude
   image_qa_status <- c("Checked & Verified", "Checked - Irrelevant Photo", "Checked - Blur/Not Visible Photo", 
                        "Checked - Photo Not Visible at the Health Facility", "Checked - Irrelevant Photo Document not exist",
-                       "Checked - Irrelevant Photo FR Uploaded Wrong Photo", "Checked - Irrelevant Photo Item not exist")
+                       "Checked - Irrelevant Photo FR Uploaded Wrong Photo", "Checked - Irrelevant Photo Item not exist",
+                       "Checked - Doesn't have Geopoint", "Checked - Photo missed due to form Version") # New
   # Standard download link 
   download_links <- "https://atrconsultingaf.surveycto.com/view/submission-attachment/"
   # download_links <- "https://artftpm.surveycto.com/view/submission-attachment/"

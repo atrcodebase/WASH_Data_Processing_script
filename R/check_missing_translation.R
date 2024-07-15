@@ -51,10 +51,10 @@ wss_missing_log <- rbind(
 excluded_cols <- c()
 
 missing_translation_log <- rbind(
-  missing_translation(data = household_dt, KEY = "KEY", excluded_cols) %>% mutate(Tool = "Household_Survey", tab_name="data"),
-  missing_translation(data = hf_checklist, KEY = "KEY", excluded_cols) %>% mutate(Tool = "HF_Checklist", tab_name="data"),
-  missing_translation(data = school_checklist, KEY = "KEY", excluded_cols) %>% mutate(Tool = "School_Checklist", tab_name="data"),
-  missing_translation(data = wss_observation, KEY = "KEY", excluded_cols) %>% mutate(Tool = "WSS_Observation", tab_name="data")
+  missing_translation(data = household_dt_approved, KEY = "KEY", excluded_cols) %>% mutate(Tool = "Household_Survey", tab_name="data"),
+  missing_translation(data = hf_checklist_approved, KEY = "KEY", excluded_cols) %>% mutate(Tool = "HF_Checklist", tab_name="data"),
+  missing_translation(data = school_checklist_approved, KEY = "KEY", excluded_cols) %>% mutate(Tool = "School_Checklist", tab_name="data"),
+  missing_translation(data = wss_observation_approved, KEY = "KEY", excluded_cols) %>% mutate(Tool = "WSS_Observation", tab_name="data")
   
 )
 

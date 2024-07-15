@@ -14,9 +14,9 @@ wss_response_log <- check_responses(data=wss_observation_approved, tool_path=wss
 
 # Export List
 response_log_list <- rbind(
-  "Household Survey"=household_response_log,
-  "HF Checklist"=hf_response_log,
-  "School Checklist"=school_response_log,
-  "WSS Observation"=wss_response_log
+  household_response_log %>% mutate(Tool="Household Survey"),
+  hf_response_log %>% mutate(Tool="HF Checklist"),
+  school_response_log %>% mutate(Tool="School Checklist"),
+  wss_response_log %>% mutate(Tool="WSS Observation")
   )
 
