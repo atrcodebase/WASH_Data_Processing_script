@@ -157,8 +157,10 @@ qa_backlog_list <- list(
   KEYs=QA_backlog_keys
 )
 
+
 ## export cleaned datasets
 check_path("output/cleaned_data") # create the output path
+archive_datasets("output/cleaned_data") # Move previous datasets to Archive
 writexl::write_xlsx(list(data=household_dt), paste0("output/cleaned_data/UNICEF_WASH_Household_Survey_cleaned_", lubridate::today(), ".xlsx"))
 writexl::write_xlsx(list(data=hf_checklist), paste0("output/cleaned_data/UNICEF_WASH_Observation_Checklist_HF_cleaned_", lubridate::today(), ".xlsx"))
 writexl::write_xlsx(list(data=school_checklist), paste0("output/cleaned_data/UNICEF_WASH_Observation_Checklist_School_cleaned_", lubridate::today(), ".xlsx"))
@@ -166,10 +168,18 @@ writexl::write_xlsx(list(data=wss_observation), paste0("output/cleaned_data/UNIC
 
 ## export client datasets
 check_path("output/client_data") # create the output path
+archive_datasets("output/client_data") # Move previous datasets to Archive
 export_datasets(list(data=household_dt_approved), paste0("output/client_data/UNICEF_WASH_Household_Survey_cleaned_approved_", lubridate::today(), ".xlsx"))
 export_datasets(list(data=hf_checklist_approved), paste0("output/client_data/UNICEF_WASH_Observation_Checklist_HF_cleaned_approved_", lubridate::today(), ".xlsx"))
 export_datasets(list(data=school_checklist_approved), paste0("output/client_data/UNICEF_WASH_Observation_Checklist_School_cleaned_approved_", lubridate::today(), ".xlsx"))
 export_datasets(list(data=wss_observation_approved), paste0("output/client_data/UNICEF_WASH_WSS_Observation_cleaned_approved_", lubridate::today(), ".xlsx"))
+
+## export Labeled datasets
+check_path("output/labeled_data") # create the output path
+archive_datasets("output/labeled_data") # Move previous datasets to Archive
+export_datasets(list(data=household_dt_labeled), paste0("output/labeled_data/UNICEF_WASH_Household_Survey_cleaned_approved_English_", lubridate::today(), ".xlsx"))
+# export_datasets(list(data=wss_observation_approved), paste0("output/labeled_data/UNICEF_WASH_WSS_Observation_cleaned_approved_", lubridate::today(), ".xlsx"))
+
 
 
 ## export additional files

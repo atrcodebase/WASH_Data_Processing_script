@@ -598,10 +598,27 @@ check_responses <- function(data, tool_path, sheet, excluded_cols=""){
   }
 }
 
+# Move Files to a different path
+archive_datasets <- function(source_folder){
+  # Define source and destination folders
+  destination_folder <- paste0(source_folder, "/Archive/")
+  # Check if destination exists else create
+  check_path(destination_folder)
+  
+  # List all files in the source folder
+  files <- list.files(source_folder, pattern = "\\.xlsx?$")
+  
+  if(length(files)!=0){
+    # Move all files to the destination folder
+    file.rename(file.path(source_folder, files), file.path(destination_folder, files))
+  }
+}
+
 # Analysis related ---------------------------------------------------------------------------------
 # Check question names in AP with question/column names in data
 ## custom function
 check_ap_questions_with_data_columns <- function(ap, dt) {
+  `%notin%` <- Negate(`%in%`)
   unmatched_questions <- c(
     ap$variable[ap$variable %notin% names(dt)],
     ap$disaggregation[ap$disaggregation %notin% c("all", names(dt))],

@@ -344,7 +344,7 @@ analysis_func <- function(df, ap, multi_response_sep = "; "){
     list_analysis <- list()
     for (col_i in unique(ap_dle_disg$repeat_for)) {
       for (j in unique(df[[col_i]])) {
-        df_i <- df %>% filter(df[[col_i]] == j)
+        df_i <- df %>% filter(df[[col_i]] %in% j) # Updated == with %in%
         
         res <- analyze(df_i, ap_dle_disg)
         # res$repeat_for_col <- col_i
@@ -373,7 +373,7 @@ analysis_func <- function(df, ap, multi_response_sep = "; "){
     results_merged <- result_no_dbl_disag
   }
   
-  #Join Label column
+  # Join Label column
   results_merged <- results_merged %>% 
     left_join(ap %>% 
                 select(Question=variable, Label=label) %>% unique()) %>% 

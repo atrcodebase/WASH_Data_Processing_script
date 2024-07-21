@@ -1,16 +1,26 @@
 # Change/Recode variables
 remove_98_99 <- function(x) {
   x = case_when(
-    x %in% c(9999, 19998, "9999", "19998") ~ "I don't know",
+    x %in% c(9999, "9999") ~ "I don't know",
     TRUE ~ x
   )}
-
+# Survey CTO Download link extension
 download_link <- "https://atrconsultingaf.surveycto.com/view/submission-attachment/"
   
 ## Household Survey --------------------------------------------------------------------------------
 household_dt <- household_dt %>%
   mutate(Starttime = as.POSIXct(Starttime, format="%a %b %d %Y %H:%M:%S"),
-  Endtime = as.POSIXct(Endtime, format="%a %b %d %Y %H:%M:%S"))
+  Endtime = as.POSIXct(Endtime, format="%a %b %d %Y %H:%M:%S"),
+  Age_groups = case_when(
+    Age_Of_Interviewee < 18 ~ 'under 18',
+    Age_Of_Interviewee >= 18 & Age_Of_Interviewee <= 24 ~ "18-24",
+    Age_Of_Interviewee > 24 & Age_Of_Interviewee <= 34 ~ "25-34",
+    Age_Of_Interviewee > 34 & Age_Of_Interviewee <= 44 ~ "35-44",
+    Age_Of_Interviewee > 44 & Age_Of_Interviewee <= 54 ~ "45-54",
+    Age_Of_Interviewee > 54 & Age_Of_Interviewee <= 64 ~ "55-64",
+    Age_Of_Interviewee > 64 ~ "65+",
+    TRUE ~ as.character(Age_Of_Interviewee)
+  ))
   # SubmissionDate= openxlsx::convertToDateTime(SubmissionDate))
 
 # Update links
